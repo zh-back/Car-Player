@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.geek.carplayer"
-        minSdk 26 // Android 8.0+ (AAudio 原生支持，比亚迪全系皆满足)
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0-geek-java"
@@ -36,7 +36,7 @@ android {
     externalNativeBuild {
         cmake {
             path file('src/main/cpp/CMakeLists.txt')
-            version '3.18.1'
+            version '3.22.1'
         }
     }
 }
