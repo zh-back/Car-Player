@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#121214"
+    android:padding="24dp">
+
+    <!-- 左侧：播放主控制区 (大字体与大按钮，适应比亚迪大屏) -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tvFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HI-RES PCM 48kHz"
+            android:textColor="#00E5FF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="#1F00E5FF"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="请插入 U 盘选择音乐"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:singleLine="true" />
+
+        <!-- 播放进度条 -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="24dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="#00E5FF" />
+
+        <!-- 大按钮控制行 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPrev"
+                android:layout_width="80dp"
+                android:layout_height="64dp"
+                android:text="⏮"
+                android:textSize="24sp"
+                android:backgroundTint="#242428"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnPlayPause"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="▶"
+                android:textSize="32sp"
+                android:backgroundTint="#00E5FF"
+                android:textColor="#000000" />
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="80dp"
+                android:layout_height="64dp"
+                android:text="⏭"
+                android:textSize="24sp"
+                android:backgroundTint="#242428"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnScan"
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:layout_marginStart="24dp"
+                android:text="扫描U盘"
+                android:textSize="16sp"
+                android:backgroundTint="#333338"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 右侧：车载 DSP 调音台与歌曲列表 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:background="#1B1B1F"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="车载极客 DSP 调音台"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- 低音调节 -->
+        <TextView
+            android:id="@+id/tvBass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="重低音 (100Hz): +3 dB"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+        <SeekBar
+            android:id="@+id/sbBass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="24"
+            android:progress="15" />
+
+        <!-- 中音调节 -->
+        <TextView
+            android:id="@+id/tvMid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="中音人声 (1kHz): +1 dB"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+        <SeekBar
+            android:id="@+id/sbMid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="24"
+            android:progress="13" />
+
+        <!-- 高音调节 -->
+        <TextView
+            android:id="@+id/tvTreble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="明亮高音 (10kHz): 0 dB"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+        <SeekBar
+            android:id="@+id/sbTreble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="24"
+            android:progress="12" />
+
+        <!-- 声场拓宽 -->
+        <TextView
+            android:id="@+id/tvWidth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="车载声场拓宽: 25%"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+        <SeekBar
+            android:id="@+id/sbWidth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="25" />
+
+        <!-- U 盘曲目列表 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="U 盘曲库"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/lvTracks"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:divider="#2D2D33"
+            android:dividerHeight="1dp" />
+    </LinearLayout>
+
+</LinearLayout>
