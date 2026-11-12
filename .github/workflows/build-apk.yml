@@ -16,6 +16,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build Vue Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -52,9 +63,10 @@ jobs:
           body: |
             极客车载音乐播放器 (专为比亚迪 DiLink 车机定制)
             
-            - 纯 Java 架构 + C 语言底层 AAudio 直驱
-            - 3段参数 EQ 实时调音 + Mid-Side 声场拓宽 + 防爆音软限幅
-            - 车载导航智能压音 (Ducking) + 方向盘方控
+            - 前端: Vue 3 + Vite 现代化响应式车载座舱大屏 UI
+            - 底层: 纯 Java 架构 + C 语言底层 AAudio 直驱
+            - 调音: 3段参数 EQ 实时调音 + Mid-Side 声场拓宽 + 防爆音软限幅
+            - 车控: 车载导航智能压音 (Ducking) + 方向盘方控
             
             安装方式：
             下载下方的 `app-debug.apk`，放入 U 盘插入车机，在车机“文件管理”中点击安装。
