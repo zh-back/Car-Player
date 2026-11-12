@@ -124,6 +124,13 @@
             android:text="重低音 (100Hz): +3 dB"
             android:textColor="#AAAAAA"
             android:textSize="13sp" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Switch" />
+
         <SeekBar
             android:id="@+id/sbBass"
             android:layout_width="match_parent"

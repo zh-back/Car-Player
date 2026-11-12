@@ -1,4 +1,0 @@
-ninja: Entering directory `D:\car-player\app\.cxx\Debug\1mr481i1\armeabi-v7a'
-[1/3] Building C object CMakeFiles/caraudio.dir/dsp_engine.c.o
-[2/3] Building C object CMakeFiles/caraudio.dir/native-audio.c.o
-[3/3] Linking C shared library D:\car-player\app\build\intermediates\cxx\Debug\1mr481i1\obj\armeabi-v7a\libcaraudio.so
