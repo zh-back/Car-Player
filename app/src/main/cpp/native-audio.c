@@ -93,7 +93,7 @@ static aaudio_data_callback_result_t aaudio_data_callback(
 // ----------------- JNI 接口实现 -----------------
 
 JNIEXPORT jboolean JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeInit(JNIEnv* env, jobject thiz, jint sample_rate) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeInit(JNIEnv* env, jclass clazz, jint sample_rate) {
     memset(&g_engine, 0, sizeof(CarAudioState));
     pthread_mutex_init(&g_engine.lock, NULL);
 
@@ -116,7 +116,7 @@ Java_com_geek_carplayer_NativeAudioEngine_nativeInit(JNIEnv* env, jobject thiz, 
     aaudio_result_t result = AAudioStreamBuilder_openStream(builder, &g_engine.stream);
     AAudioStreamBuilder_delete(builder);
 
-    if (result != AAUDIO_OK) {
+    if (result != AAUDIO_OK || g_engine.stream == NULL) {
         LOGE("Failed to open AAudio stream: %d", result);
         return JNI_FALSE;
     }
@@ -127,7 +127,7 @@ Java_com_geek_carplayer_NativeAudioEngine_nativeInit(JNIEnv* env, jobject thiz, 
 }
 
 JNIEXPORT jboolean JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativePlayFile(JNIEnv* env, jobject thiz, jstring path) {
+Java_com_geek_carplayer_NativeAudioEngine_nativePlayFile(JNIEnv* env, jclass clazz, jstring path) {
     const char* file_path = (*env)->GetStringUTFChars(env, path, NULL);
     if (!file_path) return JNI_FALSE;
 
@@ -171,14 +171,14 @@ Java_com_geek_carplayer_NativeAudioEngine_nativePlayFile(JNIEnv* env, jobject th
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativePause(JNIEnv* env, jobject thiz) {
+Java_com_geek_carplayer_NativeAudioEngine_nativePause(JNIEnv* env, jclass clazz) {
     pthread_mutex_lock(&g_engine.lock);
     g_engine.is_playing = 0;
     pthread_mutex_unlock(&g_engine.lock);
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeResume(JNIEnv* env, jobject thiz) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeResume(JNIEnv* env, jclass clazz) {
     pthread_mutex_lock(&g_engine.lock);
     if (g_engine.current_file != NULL) {
         g_engine.is_playing = 1;
@@ -187,7 +187,7 @@ Java_com_geek_carplayer_NativeAudioEngine_nativeResume(JNIEnv* env, jobject thiz
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeStop(JNIEnv* env, jobject thiz) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeStop(JNIEnv* env, jclass clazz) {
     pthread_mutex_lock(&g_engine.lock);
     g_engine.is_playing = 0;
     if (g_engine.current_file) {
@@ -198,28 +198,28 @@ Java_com_geek_carplayer_NativeAudioEngine_nativeStop(JNIEnv* env, jobject thiz) 
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeSetEQ(JNIEnv* env, jobject thiz, jfloat bass, jfloat mid, jfloat treble) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeSetEQ(JNIEnv* env, jclass clazz, jfloat bass, jfloat mid, jfloat treble) {
     pthread_mutex_lock(&g_engine.lock);
     dsp_set_eq(&g_engine.dsp, bass, mid, treble);
     pthread_mutex_unlock(&g_engine.lock);
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeSetStereoWidth(JNIEnv* env, jobject thiz, jfloat width) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeSetStereoWidth(JNIEnv* env, jclass clazz, jfloat width) {
     pthread_mutex_lock(&g_engine.lock);
     dsp_set_stereo_width(&g_engine.dsp, width);
     pthread_mutex_unlock(&g_engine.lock);
 }
 
 JNIEXPORT void JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeSetVolume(JNIEnv* env, jobject thiz, jfloat volume) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeSetVolume(JNIEnv* env, jclass clazz, jfloat volume) {
     pthread_mutex_lock(&g_engine.lock);
     dsp_set_volume(&g_engine.dsp, volume);
     pthread_mutex_unlock(&g_engine.lock);
 }
 
 JNIEXPORT jint JNICALL
-Java_com_geek_carplayer_NativeAudioEngine_nativeGetProgressPercent(JNIEnv* env, jobject thiz) {
+Java_com_geek_carplayer_NativeAudioEngine_nativeGetProgressPercent(JNIEnv* env, jclass clazz) {
     if (g_engine.total_data_bytes == 0) return 0;
     int progress = (int)((1.0f - (float)g_engine.data_bytes_left / (float)g_engine.total_data_bytes) * 100);
     return progress < 0 ? 0 : (progress > 100 ? 100 : progress);
