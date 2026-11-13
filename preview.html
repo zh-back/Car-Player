@@ -3,252 +3,456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>极客车载播放器 - 界面预览 (比亚迪大屏横屏适配)</title>
+    <title>极客车载播放器 - 现代极简扁平化设计 (Flat Design)</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
         body {
-            background-color: #0B0B0E;
+            background-color: #0A0A0D;
             color: #FFFFFF;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 24px;
         }
-        /* 模拟比亚迪 15.6 英寸横屏车机屏幕 */
+        /* 模拟比亚迪 15.6 英寸横屏车机大屏 */
         .car-screen {
-            width: 1100px;
-            height: 620px;
-            background: #121216;
+            width: 1160px;
+            height: 640px;
+            background: #101114;
             border-radius: 16px;
-            border: 3px solid #22222A;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            border: 2px solid #23252E;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.85);
             display: flex;
             overflow: hidden;
-            position: relative;
         }
-        /* 左侧主播放区 */
-        .player-main {
-            flex: 1.2;
-            padding: 40px;
+        /* 左侧扁平导航 Rail */
+        .nav-rail {
+            width: 86px;
+            background: #14151A;
+            border-right: 1px solid #23252E;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            border-right: 1px solid #1E1E26;
+            align-items: center;
+            padding: 24px 0;
+            flex-shrink: 0;
         }
-        .format-badge {
-            align-self: flex-start;
-            background: rgba(0, 229, 255, 0.12);
-            color: #00E5FF;
-            font-size: 13px;
+        .brand-logo {
+            width: 42px;
+            height: 42px;
+            background: #00E5FF;
+            color: #000;
+            font-weight: 900;
+            font-size: 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        .nav-item {
+            width: 66px;
+            padding: 12px 0;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: #8E92A4;
+            font-size: 11px;
+            margin-bottom: 12px;
+            transition: all 0.15s;
+        }
+        .nav-item.active {
+            background: #00E5FF;
+            color: #000;
+            font-weight: 700;
+        }
+        .nav-item .icon { font-size: 18px; }
+        .nav-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: #6C7082;
+        }
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #00E676;
+        }
+
+        /* 中间主控制台 */
+        .main-stage {
+            flex: 1.35;
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-right: 1px solid #23252E;
+        }
+        .stage-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge-group { display: flex; gap: 8px; }
+        .badge {
+            font-size: 11px;
             font-weight: 700;
             padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
+            border-radius: 6px;
+        }
+        .badge.primary { background: #00E5FF; color: #000; }
+        .badge.muted { background: #20222B; color: #A6AAB8; }
+        .badge.success { background: rgba(0, 230, 118, 0.15); color: #00E676; }
+        .car-model-tag { font-size: 12px; color: #72778B; }
+
+        /* 唱片与信息 */
+        .album-hero {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin: 16px 0;
+        }
+        .flat-disc-card {
+            width: 160px;
+            height: 160px;
+            background: #181920;
+            border-radius: 18px;
+            border: 1px solid #2A2D3A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .disc-pattern {
+            width: 124px;
+            height: 124px;
+            border-radius: 50%;
+            background: repeating-radial-gradient(circle, #20222B, #20222B 6px, #16171E 7px, #16171E 12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #282B36;
+            animation: discSpin 14s linear infinite;
+        }
+        @keyframes discSpin { 100% { transform: rotate(360deg); } }
+        .disc-core {
+            width: 42px;
+            height: 42px;
+            background: #00E5FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 18px;
         }
         .song-title {
-            font-size: 38px;
+            font-size: 32px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            letter-spacing: -0.5px;
         }
-        .song-artist {
-            font-size: 18px;
-            color: #888899;
-            margin-bottom: 30px;
+        .song-artist { font-size: 14px; color: #8E92A4; margin-bottom: 18px; }
+
+        .flat-spectrum { display: flex; align-items: flex-end; gap: 5px; height: 26px; }
+        .spectrum-bar {
+            width: 4px;
+            height: 6px;
+            background: #00E5FF;
+            border-radius: 2px;
+            animation: spectrumBounce 0.9s ease-in-out infinite alternate;
         }
-        .progress-bar-container {
+        .spectrum-bar:nth-child(2n) { animation-delay: 0.15s; }
+        .spectrum-bar:nth-child(3n) { animation-delay: 0.3s; }
+        .spectrum-bar:nth-child(4n) { animation-delay: 0.45s; }
+        @keyframes spectrumBounce { 0% { height: 6px; } 100% { height: 24px; } }
+
+        /* 进度条 */
+        .progress-bar-flat {
             width: 100%;
             height: 8px;
-            background: #252530;
+            background: #22242E;
             border-radius: 4px;
+            cursor: pointer;
             overflow: hidden;
-            margin-bottom: 30px;
-            cursor: pointer;
-        }
-        .progress-fill {
-            width: 35%;
-            height: 100%;
-            background: linear-gradient(90deg, #00B0FF, #00E5FF);
-        }
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-        .btn-ctrl {
-            background: #22222A;
-            color: #FFF;
-            border: none;
-            width: 70px;
-            height: 60px;
-            border-radius: 12px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-ctrl:hover { background: #30303C; transform: scale(1.05); }
-        .btn-play {
-            width: 110px;
-            height: 75px;
-            background: #00E5FF;
-            color: #000;
-            font-size: 32px;
-            font-weight: bold;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 229, 255, 0.3);
-        }
-        .btn-play:hover { background: #33EBFF; transform: scale(1.05); }
-        .btn-scan {
-            background: #2D2D38;
-            color: #DDD;
-            border: none;
-            padding: 0 20px;
-            height: 60px;
-            border-radius: 12px;
-            font-size: 15px;
-            cursor: pointer;
-            margin-left: auto;
-        }
-
-        /* 右侧调音台与曲库 */
-        .player-side {
-            flex: 1;
-            padding: 30px;
-            background: #17171D;
-            display: flex;
-            flex-direction: column;
-        }
-        .panel-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: #FFF;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .eq-item { margin-bottom: 12px; }
-        .eq-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13px;
-            color: #9999AA;
             margin-bottom: 6px;
         }
+        .progress-track-fill {
+            width: 42%;
+            height: 100%;
+            background: #00E5FF;
+            border-radius: 4px;
+        }
+        .time-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #72778B;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* 扁平按钮组 */
+        .flat-controls { display: flex; align-items: center; gap: 18px; }
+        .flat-btn {
+            border: none;
+            background: #1C1E26;
+            color: #FFF;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .flat-btn:active { transform: scale(0.96); }
+        .flat-btn.square { width: 64px; height: 56px; font-size: 20px; }
+        .flat-btn.hero-play {
+            width: 100px;
+            height: 64px;
+            background: #00E5FF;
+            color: #000;
+            font-size: 26px;
+            font-weight: 800;
+            border-radius: 14px;
+        }
+        .flat-btn.action-scan {
+            height: 56px;
+            padding: 0 20px;
+            background: #222530;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: auto;
+            gap: 6px;
+        }
+
+        /* 右侧面板 */
+        .side-panel {
+            flex: 1.15;
+            background: #131419;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .panel-title { font-size: 15px; font-weight: 700; color: #E2E4EC; }
+        .preset-pills { display: flex; gap: 6px; margin-bottom: 12px; }
+        .preset-pill {
+            flex: 1;
+            padding: 6px 0;
+            background: #1C1E26;
+            border: 1px solid #282A36;
+            border-radius: 6px;
+            color: #A6AAB8;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .preset-pill.active {
+            background: #00E5FF;
+            color: #000;
+            border-color: #00E5FF;
+        }
+
+        .flat-slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #17181F;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #22242E;
+        }
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #8E92A4;
+            margin-bottom: 4px;
+        }
+        .slider-val { color: #00E5FF; font-weight: 700; }
         input[type="range"] {
             width: 100%;
-            height: 6px;
-            background: #2D2D38;
+            height: 5px;
+            background: #282B36;
             border-radius: 3px;
             outline: none;
             accent-color: #00E5FF;
+            cursor: pointer;
         }
-        .track-list {
+
+        .flat-list {
             flex: 1;
             overflow-y: auto;
-            margin-top: 15px;
-            background: #121216;
+            background: #17181F;
             border-radius: 10px;
-            padding: 8px;
-            border: 1px solid #252530;
+            border: 1px solid #22242E;
+            padding: 6px;
         }
-        .track-item {
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 14px;
-            cursor: pointer;
+        .flat-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
-            background: #1A1A22;
+            padding: 10px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 3px;
+            background: #14151C;
         }
-        .track-item:hover, .track-item.active {
-            background: #262635;
-            color: #00E5FF;
+        .flat-row.playing {
+            background: #1E222D;
+            border-left: 3px solid #00E5FF;
         }
-        .badge-format {
-            font-size: 11px;
-            background: #333344;
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: #AAA;
-        }
+        .row-num { font-size: 12px; color: #6C7082; font-weight: 700; width: 24px; }
+        .row-info { flex: 1; overflow: hidden; padding-right: 8px; }
+        .row-title { font-size: 13px; font-weight: 600; color: #FFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .flat-row.playing .row-title { color: #00E5FF; }
+        .row-sub { font-size: 10px; color: #6C7082; margin-top: 1px; }
+        .row-tag { font-size: 10px; background: #242733; color: #8E92A4; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <div class="car-screen">
-    <!-- 左侧主播放区 -->
-    <div class="player-main">
-        <div class="format-badge">HI-RES PCM • 48kHz / 24-bit</div>
-        <div class="song-title">Hotel California (加州旅馆)</div>
-        <div class="song-artist">Eagles (老鹰乐队) - 现场现场无损版</div>
-        <div class="progress-bar-container">
-            <div class="progress-fill"></div>
-        </div>
-        <div class="controls">
-            <button class="btn-ctrl">⏮</button>
-            <button class="btn-ctrl btn-play">▶</button>
-            <button class="btn-ctrl">⏭</button>
-            <button class="btn-scan">📂 扫描 U 盘</button>
+    <!-- 1. 左侧扁平导航 Rail -->
+    <div class="nav-rail">
+        <div class="brand-logo">CP</div>
+        <button class="nav-item active"><span class="icon">🎵</span><span>播放器</span></button>
+        <button class="nav-item"><span class="icon">📁</span><span>U 盘曲库</span></button>
+        <button class="nav-item"><span class="icon">🎛️</span><span>极客调音</span></button>
+        <div class="nav-footer">
+            <span class="status-dot"></span>
+            <span>车载就绪</span>
         </div>
     </div>
 
-    <!-- 右侧车载 DSP 调音台与曲库 -->
-    <div class="player-side">
-        <div class="panel-title">🎛️ 车载极客 DSP 实时调音台</div>
-        
-        <div class="eq-item">
-            <div class="eq-header">
-                <span>重低音 (100Hz)</span>
-                <span id="txtBass">+4 dB</span>
+    <!-- 2. 中间主控制台 -->
+    <div class="main-stage">
+        <div class="stage-top">
+            <div class="badge-group">
+                <span class="badge primary">HI-RES AUDIO</span>
+                <span class="badge muted">FLAC • 48kHz / 24-bit</span>
+                <span class="badge success">AAUDIO 直驱</span>
             </div>
-            <input type="range" min="-12" max="12" value="4" oninput="document.getElementById('txtBass').innerText = (this.value > 0 ? '+' : '') + this.value + ' dB'">
+            <div class="car-model-tag">比亚迪 DiLink 智享空间</div>
         </div>
 
-        <div class="eq-item">
-            <div class="eq-header">
-                <span>中音人声 (1kHz)</span>
-                <span id="txtMid">+2 dB</span>
+        <div class="album-hero">
+            <div class="flat-disc-card">
+                <div class="disc-pattern">
+                    <div class="disc-core">♪</div>
+                </div>
             </div>
-            <input type="range" min="-12" max="12" value="2" oninput="document.getElementById('txtMid').innerText = (this.value > 0 ? '+' : '') + this.value + ' dB'">
+
+            <div class="meta-info">
+                <h1 class="song-title">Hotel California (加州旅馆)</h1>
+                <p class="song-artist">Eagles (老鹰乐队) • U 盘车载极客引擎播放</p>
+                <div class="flat-spectrum">
+                    <div class="spectrum-bar" v-for="i in 18"></div>
+                </div>
+            </div>
         </div>
 
-        <div class="eq-item">
-            <div class="eq-header">
-                <span>明亮高音 (10kHz)</span>
-                <span id="txtTreble">0 dB</span>
+        <div class="stage-bottom">
+            <div class="progress-bar-flat">
+                <div class="progress-track-fill"></div>
             </div>
-            <input type="range" min="-12" max="12" value="0" oninput="document.getElementById('txtTreble').innerText = (this.value > 0 ? '+' : '') + this.value + ' dB'">
+            <div class="time-row">
+                <span>01:48</span>
+                <span style="color: #00E5FF;">42%</span>
+                <span>04:18</span>
+            </div>
+
+            <div class="flat-controls">
+                <button class="flat-btn square">⏮</button>
+                <button class="flat-btn hero-play">▶</button>
+                <button class="flat-btn square">⏭</button>
+                <button class="flat-btn action-scan">⟳ 扫描 U 盘</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. 右侧多功能平铺面板 -->
+    <div class="side-panel">
+        <div class="panel-header">
+            <h2 class="panel-title">车载 DSP 调音台</h2>
+            <span style="font-size:11px; background:#222530; color:#8E92A4; padding:2px 6px; border-radius:4px;">硬件 EQ</span>
         </div>
 
-        <div class="eq-item">
-            <div class="eq-header">
-                <span>车载声场拓宽 (Mid-Side)</span>
-                <span id="txtWidth">35%</span>
-            </div>
-            <input type="range" min="0" max="100" value="35" oninput="document.getElementById('txtWidth').innerText = this.value + '%'">
+        <div class="preset-pills">
+            <button class="preset-pill active">标准均衡</button>
+            <button class="preset-pill">动感低音</button>
+            <button class="preset-pill">清澈人声</button>
+            <button class="preset-pill">座舱环绕</button>
         </div>
 
-        <div class="panel-title" style="margin-top: 15px; margin-bottom: 8px;">📁 U 盘曲目列表</div>
-        <div class="track-list">
-            <div class="track-item active">
-                <span>01. Hotel California</span>
-                <span class="badge-format">FLAC</span>
+        <div class="flat-slider-group">
+            <div>
+                <div class="slider-header"><span>重低音 (100Hz)</span><span class="slider-val">+3 dB</span></div>
+                <input type="range" min="-12" max="12" value="3">
             </div>
-            <div class="track-item">
-                <span>02. 渡口 - 蔡琴 (试音曲目)</span>
-                <span class="badge-format">WAV</span>
+            <div>
+                <div class="slider-header"><span>中音人声 (1kHz)</span><span class="slider-val">+1 dB</span></div>
+                <input type="range" min="-12" max="12" value="1">
             </div>
-            <div class="track-item">
-                <span>03. 加州旅馆 (吉他开场)</span>
-                <span class="badge-format">FLAC</span>
+            <div>
+                <div class="slider-header"><span>明亮高音 (10kHz)</span><span class="slider-val">0 dB</span></div>
+                <input type="range" min="-12" max="12" value="0">
+            </div>
+            <div>
+                <div class="slider-header"><span>声场立体声拓宽</span><span class="slider-val">30%</span></div>
+                <input type="range" min="0" max="100" value="30">
+            </div>
+        </div>
+
+        <div class="panel-header" style="margin-top: 6px;">
+            <h2 class="panel-title">U 盘曲库</h2>
+            <span style="font-size:12px; color:#00E5FF; font-weight:700;">3 首</span>
+        </div>
+
+        <div class="flat-list">
+            <div class="flat-row playing">
+                <div class="row-num">01</div>
+                <div class="row-info">
+                    <div class="row-title">Hotel California (加州旅馆)</div>
+                    <div class="row-sub">本地存储 • 无损解码</div>
+                </div>
+                <div class="row-tag">FLAC</div>
+            </div>
+            <div class="flat-row">
+                <div class="row-num">02</div>
+                <div class="row-info">
+                    <div class="row-title">渡口 - 蔡琴 (专业试音曲)</div>
+                    <div class="row-sub">本地存储 • 无损解码</div>
+                </div>
+                <div class="row-tag">WAV</div>
+            </div>
+            <div class="flat-row">
+                <div class="row-num">03</div>
+                <div class="row-info">
+                    <div class="row-title">偏偏喜欢你 - 陈百强</div>
+                    <div class="row-sub">本地存储 • 无损解码</div>
+                </div>
+                <div class="row-tag">WAV</div>
             </div>
         </div>
     </div>
